@@ -1,26 +1,322 @@
+
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #faf8f4;
+  --surface: #f5f3ed;
+  --foreground: #424441;
+  --muted: #686a63;
+  --primary: #6c8554;
+  --primary-hover: #536c40;
+  --border: #e7e5dd;
+
+  --font-body: var(--font-inter), Arial, sans-serif;
+  --font-heading: var(--font-playfair), Georgia, serif;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 90px;
 }
 
 body {
+  margin: 0;
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+a {
+  text-decoration: none;
+}
+
+::selection {
+  background: #dce7d1;
+  color: #424441;
+}
+
+.container-universal {
+  width: min(100% - 3rem, 1280px);
+  margin-inline: auto;
+}
+
+.section-universal {
+  padding-block: 88px;
+  scroll-margin-top: 90px;
+}
+
+.section-label {
+  margin-bottom: 14px;
+  color: var(--primary);
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.section-title {
+  font-size: clamp(2.25rem, 4vw, 3.25rem);
+  font-weight: 600;
+  line-height: 1.15;
+  color: var(--foreground);
+}
+
+.section-description {
+  max-width: 620px;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.9;
+}
+
+.card-title {
+  font-size: clamp(1.35rem, 2vw, 1.75rem);
+  font-weight: 600;
+}
+
+.body-text {
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.9;
+}
+
+.btn-primary,
+.btn-outline,
+.btn-nav {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 44px;
+  border-radius: 999px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  transition:
+    background 0.25s,
+    color 0.25s,
+    border-color 0.25s,
+    transform 0.25s,
+    box-shadow 0.25s;
+}
+
+.btn-primary {
+  padding: 11px 24px;
+  background: var(--primary);
+  color: white;
+}
+
+.btn-primary:hover {
+  background: var(--primary-hover);
+  transform: translateY(-2px);
+}
+
+.btn-outline {
+  padding: 10px 23px;
+  border: 1px solid #b9c5ab;
+  color: #526a46;
+}
+
+.btn-outline:hover {
+  background: #e8eddf;
+  border-color: #a8b69a;
+}
+
+.btn-nav {
+  min-height: 40px;
+  padding: 8px 17px;
+  border: 1px solid #e7e5dd;
+  background: rgb(255 255 255 / 60%);
+  color: var(--foreground);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.btn-nav:hover {
+  background: #e8eddf;
+  border-color: #a8b69a;
+  color: #526a46;
+}
+
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
+}
+
+/* =========================================
+   ORIGINAL RESPONSIVE RULES
+========================================= */
+
+@media (max-width: 768px) {
+  .container-universal {
+    width: min(100% - 2rem, 1280px);
+  }
+
+  .section-universal {
+    padding-block: 64px;
+  }
+
+  .section-description,
+  .body-text {
+    font-size: 14px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .btn-primary:hover {
+    transform: none;
+  }
+}
+
+/* =========================================
+   ADDITIONAL RESPONSIVE FIXES ONLY
+   NO FONT, COLOR OR DESIGN CHANGES
+========================================= */
+
+/* Prevent horizontal overflow */
+
+html,
+body {
+  max-width: 100%;
+}
+
+body {
+  overflow-x: clip;
+}
+
+/* Keep media inside containers */
+
+img,
+video,
+canvas,
+svg {
+  max-width: 100%;
+}
+
+/* Prevent grid and flex overflow */
+
+.container-universal {
+  min-width: 0;
+}
+
+.container-universal > * {
+  min-width: 0;
+}
+
+.container-universal .grid > * {
+  min-width: 0;
+}
+
+/* Keep sections within viewport */
+
+section {
+  max-width: 100%;
+}
+
+/* Keep form elements responsive */
+
+input,
+textarea,
+select {
+  max-width: 100%;
+}
+
+/* =========================================
+   MOBILE DEVICES
+========================================= */
+
+@media (max-width: 767px) {
+  /* Hero layout only */
+
+  #home .grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  #home .grid > * {
+    min-width: 0;
+  }
+
+  /* Prevent image overflow */
+
+  #home img {
+    max-width: 100%;
+  }
+
+  /* Allow buttons to wrap */
+
+  #home a {
+    max-width: 100%;
+  }
+}
+
+/* =========================================
+   TABLET DEVICES
+========================================= */
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  #home .grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  #home .grid > * {
+    min-width: 0;
+  }
+}
+
+/* =========================================
+   SMALL SCREEN SAFETY
+========================================= */
+
+@media (max-width: 360px) {
+  .container-universal {
+    width: calc(100% - 32px);
+  }
+
+  #home .grid > * {
+    min-width: 0;
+  }
 }
